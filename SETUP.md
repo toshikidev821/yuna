@@ -30,9 +30,9 @@ claude --version   # 2.x
 
 1. [https://dash.cloudflare.com/](https://dash.cloudflare.com/) にログイン
 2. **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**
-3. GitHub と認証 → `takahasitoshiki/yuna` を選択
+3. GitHub と認証 → `toshikidev821/yuna` を選択
 4. ビルド設定:
-   - **Project name**: `yuna`（→ 公開URLは `https://yuna.pages.dev`）
+   - **Project name**: `yuna`（→ 公開URLは `https://yuna-1v6.pages.dev`）
    - **Production branch**: `main`
    - **Framework preset**: `Astro`
    - **Build command**: `npm run build`
@@ -41,7 +41,7 @@ claude --version   # 2.x
 
 5. **Save and Deploy**
 
-数分でデプロイ完了。`https://yuna.pages.dev` で確認。
+数分でデプロイ完了。`https://yuna-1v6.pages.dev` で確認。
 
 ### 2-2. 動作確認
 
@@ -65,8 +65,8 @@ DNS は自動設定される（ドメインが Cloudflare 管理下なら）。
 ## 4. トラブルシュート
 
 ### push できない
-リポジトリ所有者が `takahasitoshiki` なので、`gh auth status` で `takahasitoshiki` がログイン済みか確認。
-post_article_via_claude.sh は実行のたびに `gh auth switch --user takahasitoshiki` → push → `gh auth switch --user toshikidev821` で戻す動作。
+`gh auth status` で `toshikidev821` が active であることを確認。
+リポジトリ所有者と active アカウントが一致しているので、特別な切り替え操作は不要。
 
 ### Cloudflare Pages のビルドが失敗する
 `Node.js version` を 20 以上に明示してるか確認。`NODE_VERSION=20` を Pages の環境変数に入れる。

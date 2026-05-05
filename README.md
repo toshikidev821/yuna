@@ -4,7 +4,7 @@
 
 - フレームワーク: [Astro](https://astro.build/) v5
 - ホスティング: Cloudflare Pages
-- 記事生成: ローカルで `~/develop/scripts/post_article.py` が Claude API を呼んで markdown を生成 → push → Cloudflare Pages が自動デプロイ
+- 記事生成: ローカルで `~/develop/scripts/post_article_via_claude.sh` が Claude Code (headless) を呼んで markdown を生成 → push → Cloudflare Pages が自動デプロイ
 
 ## 構成
 
@@ -34,7 +34,7 @@ npm run build # dist/ に静的ファイル出力
 
 ## 記事の追加
 
-通常は `develop/scripts/post_article.py` が毎朝7時に自動で記事を作る。
+通常は `develop/scripts/post_article_via_claude.sh` が毎朝7時に自動で記事を作る。
 手動で追加する場合は `src/content/posts/YYYY-MM-DD.md` を frontmatter付きで作成し、
 `git push` するだけ。
 

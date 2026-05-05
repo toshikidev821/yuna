@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://yuna.pages.dev",
+  site: "https://yuna-1v6.pages.dev",
   trailingSlash: "ignore",
   build: {
     format: "directory",
