@@ -1,0 +1,38 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "毎日のITトレンドから1本だけピックして、自分なりに咀嚼する記録。" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site">
+      <div class="inner">
+        <h1><a href="/">yuna</a></h1>
+        <nav>
+          <a href="/">archive</a>
+          <a href="https://github.com/takahasitoshiki/yuna" rel="noopener">github</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site">
+      <p>© yuna — daily one pick</p>
+    </footer>
+  </body>
+</html>
