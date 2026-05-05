@@ -54,6 +54,23 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <script is:inline>
+      // FOUC防止: bodyレンダリング前にテーマを適用
+      (function () {
+        try {
+          const saved = localStorage.getItem("theme");
+          const theme =
+            saved ??
+            (window.matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark");
+          document.documentElement.dataset.theme = theme;
+        } catch (_) {
+          /* noop */
+        }
+      })();
+    </script>
   </head>
   <body>
     <header class="site">
@@ -63,7 +80,18 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
           <a href="/archive/">archive</a>
           <a href="/tags/">tags</a>
           <a href="/about/">about</a>
+          <a href="/search/">search</a>
           <a href="/rss.xml">rss</a>
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            type="button"
+            aria-label="テーマを切り替える"
+            title="テーマを切り替える"
+          >
+            <span data-theme-icon="dark">☾</span>
+            <span data-theme-icon="light">☀</span>
+          </button>
         </nav>
       </div>
     </header>
@@ -73,5 +101,48 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
     <footer class="site">
       <p>© toshiki — daily one pick</p>
     </footer>
+
+    <script>
+      // テーマ切替
+      const btn = document.getElementById("theme-toggle");
+      btn?.addEventListener("click", () => {
+        const cur = document.documentElement.dataset.theme === "light"
+          ? "light"
+          : "dark";
+        const next = cur === "light" ? "dark" : "light";
+        document.documentElement.dataset.theme = next;
+        try {
+          localStorage.setItem("theme", next);
+        } catch (_) {
+          /* noop */
+        }
+      });
+
+      // コードブロックにコピーボタンを追加
+      document.querySelectorAll("article.post pre").forEach((pre) => {
+        if (pre.querySelector(".copy-btn")) return;
+        const btn = document.createElement("button");
+        btn.className = "copy-btn";
+        btn.type = "button";
+        btn.setAttribute("aria-label", "コードをコピー");
+        btn.textContent = "Copy";
+        btn.addEventListener("click", async () => {
+          const code = pre.querySelector("code");
+          const text = code?.innerText ?? pre.innerText;
+          try {
+            await navigator.clipboard.writeText(text);
+            btn.textContent = "Copied!";
+            btn.classList.add("copied");
+            setTimeout(() => {
+              btn.textContent = "Copy";
+              btn.classList.remove("copied");
+            }, 1500);
+          } catch (_) {
+            btn.textContent = "Failed";
+          }
+        });
+        pre.appendChild(btn);
+      });
+    </script>
   </body>
 </html>

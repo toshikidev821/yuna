@@ -1,4 +1,5 @@
-:root {
+:root,
+:root[data-theme="dark"] {
   --bg: #0e0f12;
   --bg-soft: #16181d;
   --fg: #e7e9ee;
@@ -6,6 +7,15 @@
   --accent: #8ab4f8;
   --border: #2a2d34;
   --max-width: 720px;
+}
+
+:root[data-theme="light"] {
+  --bg: #fdfdfc;
+  --bg-soft: #f4f4f1;
+  --fg: #1a1a1a;
+  --fg-soft: #5a6068;
+  --accent: #2563eb;
+  --border: #e2e2dc;
 }
 
 * {
@@ -22,6 +32,9 @@ body {
     "Yu Gothic UI", "Segoe UI", sans-serif;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 a {
@@ -46,8 +59,9 @@ header.site .inner {
   max-width: var(--max-width);
   margin: 0 auto;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
 }
 header.site h1 {
   font-size: 1.1rem;
@@ -57,10 +71,42 @@ header.site h1 {
 header.site h1 a {
   color: var(--fg);
 }
+header.site nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
 header.site nav a {
   color: var(--fg-soft);
-  margin-left: 1rem;
   font-size: 0.9rem;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-soft);
+  border-radius: 0.3rem;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.theme-toggle:hover {
+  color: var(--fg);
+  border-color: var(--accent);
+}
+.theme-toggle [data-theme-icon="light"] {
+  display: none;
+}
+.theme-toggle [data-theme-icon="dark"] {
+  display: inline;
+}
+:root[data-theme="light"] .theme-toggle [data-theme-icon="light"] {
+  display: inline;
+}
+:root[data-theme="light"] .theme-toggle [data-theme-icon="dark"] {
+  display: none;
 }
 
 footer.site {
@@ -108,13 +154,20 @@ article.post .meta {
   color: var(--fg-soft);
   font-size: 0.85rem;
 }
+
 article.post pre {
+  position: relative;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1rem;
   overflow-x: auto;
 }
+:root[data-theme="light"] article.post pre {
+  background: #1f2328;
+  color: #e7e9ee;
+}
+
 article.post code {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.9em;
@@ -124,4 +177,69 @@ article.post blockquote {
   margin: 1rem 0;
   padding: 0.25rem 1rem;
   color: var(--fg-soft);
+}
+
+/* コードコピー ボタン */
+.copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: #e7e9ee;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.3rem;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+  font-family: inherit;
+}
+article.post pre:hover .copy-btn,
+.copy-btn:focus {
+  opacity: 1;
+}
+.copy-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+.copy-btn.copied {
+  background: rgba(34, 197, 94, 0.25);
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.4);
+}
+
+/* 見出しアンカー */
+article.post h2,
+article.post h3 {
+  position: relative;
+}
+article.post .heading-anchor {
+  position: absolute;
+  left: -1.4em;
+  top: 0;
+  bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  color: var(--fg-soft);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  width: 1.2em;
+  text-align: center;
+  font-size: 0.85em;
+}
+article.post h2:hover .heading-anchor,
+article.post h3:hover .heading-anchor,
+article.post .heading-anchor:focus {
+  opacity: 1;
+}
+article.post .heading-anchor:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+@media (max-width: 720px) {
+  article.post .heading-anchor {
+    display: none;
+  }
 }

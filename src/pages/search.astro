@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="search — toshiki" description="記事を全文検索">
+  <h2 class="page-title">Search</h2>
+  <p class="lead">
+    キーワードを入力すると、すべての記事の中から該当箇所を検索します。
+  </p>
+
+  <div id="search" class="pagefind"></div>
+
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script src="/pagefind/pagefind-ui.js" is:inline></script>
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      if (typeof PagefindUI === "undefined") return;
+      new PagefindUI({
+        element: "#search",
+        showImages: false,
+        translations: {
+          placeholder: "記事を検索",
+          zero_results: "「[SEARCH_TERM]」に一致する記事はありません",
+          many_results: "[COUNT] 件の結果",
+          one_result: "1 件の結果",
+          searching: "「[SEARCH_TERM]」を検索中…",
+        },
+      });
+    });
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .page-title {
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+  }
+  .lead {
+    color: var(--fg-soft);
+    font-size: 0.9rem;
+    margin: 0 0 1.5rem;
+  }
+
+  #search {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: var(--fg);
+    --pagefind-ui-background: var(--bg-soft);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-tag: var(--bg-soft);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 0.5rem;
+    --pagefind-ui-font: inherit;
+  }
+</style>
