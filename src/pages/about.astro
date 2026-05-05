@@ -1,0 +1,122 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="about — yuna" description="toshiki / wizard_owl0104 のプロフィール">
+  <article class="profile">
+    <h1>toshiki</h1>
+    <p class="lead">
+      Web エンジニア 3 年目。React / Next.js / PHP / Laravel で受託・自社プロダクトを書いてきました。
+      2026 年は <strong>Rust + ハードウェア</strong> へ軸足を広げています。
+    </p>
+
+    <h2>スキル</h2>
+    <ul>
+      <li>フロント: React / Next.js / TypeScript</li>
+      <li>バック: PHP / Laravel</li>
+      <li>学習中: Rust（組み込み方向）</li>
+    </ul>
+
+    <h2>このサイトの著者から見た自分</h2>
+    <blockquote>
+      <p>
+        毎朝のルーティン（筋トレ・英語・技術学習）を issue 化して回している、
+        習慣ドリブンな人。<strong>「0 の日を作らない、最低 1 つ閉じれば勝ち」</strong>
+        というルールで自分を運用していて、完璧主義より継続を優先する判断ができる。
+      </p>
+      <p>
+        技術の流行を追うのではなく、<strong>「自分の長期目標に刺さるか」</strong>でニュースを
+        フィルタする視点を持っている。Bun が Zig から Rust に移植されるニュースを引いて
+        「Rust に張った自分の判断は正解だった」と接続できるタイプ。
+      </p>
+      <p>
+        コミュニケーションでは結論先行・短文志向で、無駄な前置きを嫌う。
+        やりとりのテンポが速く、決めたら動く。<strong>「考えながら手も動かす」</strong>
+        実装者としての強さがある。
+      </p>
+    </blockquote>
+
+    <h2>お仕事募集中です</h2>
+    <p>
+      副業 / 受託 / 業務委託、相談ベースで歓迎しています。React/Next.js/Laravel の
+      実装、新規プロダクトの立ち上げ、既存コードのリファクタなど。
+      Rust 案件もぜひお声がけください（学習中ながら本気で取りに行きます）。
+    </p>
+
+    <h2>連絡先</h2>
+    <ul class="contact">
+      <li>
+        Email:
+        <a href="mailto:toshikidev821@gmail.com">toshikidev821@gmail.com</a>
+      </li>
+      <li>
+        Threads:
+        <a
+          href="https://www.threads.net/@wizard_owl0104"
+          rel="noopener"
+          target="_blank">@wizard_owl0104</a
+        >
+      </li>
+    </ul>
+
+    <h2>ポートフォリオ</h2>
+    <ul class="portfolio">
+      <li>
+        <a
+          href="https://github.com/takahasitoshiki/rehab-management-system"
+          rel="noopener"
+          target="_blank">rehab-management-system</a
+        >
+        <span>— リハビリ管理システム</span>
+      </li>
+      <li>
+        <a
+          href="https://github.com/takahasitoshiki/postThreads"
+          rel="noopener"
+          target="_blank">postThreads</a
+        >
+        <span>— Threads 投稿ツール</span>
+      </li>
+    </ul>
+  </article>
+</BaseLayout>
+
+<style>
+  .profile h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+  }
+  .profile .lead {
+    color: var(--fg-soft);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  .profile h2 {
+    font-size: 1.1rem;
+    margin: 2rem 0 0.75rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.4rem;
+  }
+  .profile ul {
+    padding-left: 1.2rem;
+  }
+  .profile blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    color: var(--fg);
+    background: var(--bg-soft);
+    border-radius: 0 0.4rem 0.4rem 0;
+  }
+  .profile blockquote p {
+    margin: 0.5rem 0;
+  }
+  .profile .contact a,
+  .profile .portfolio a {
+    color: var(--accent);
+  }
+  .profile .portfolio span {
+    color: var(--fg-soft);
+    font-size: 0.85rem;
+  }
+</style>
