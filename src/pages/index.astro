@@ -6,33 +6,266 @@ const posts = (await getCollection("posts")).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 
+const recent = posts.slice(0, 5);
+
 const fmt = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
     d.getDate(),
   ).padStart(2, "0")}`;
 ---
 
-<BaseLayout title="toshiki — daily one pick">
-  <h2 style="font-size:1rem;color:var(--fg-soft);font-weight:500;letter-spacing:0.04em;">
-    毎日1本、ITトレンドからピックする記録
-  </h2>
-  {
-    posts.length === 0 ? (
-      <p style="color:var(--fg-soft)">
-        まだ記事はありません。明日の朝、最初の1本が公開されます。
-      </p>
-    ) : (
-      <ul class="post-list">
-        {posts.map((post) => (
-          <li>
-            <time datetime={fmt(post.data.date)}>{fmt(post.data.date)}</time>
-            <a href={`/posts/${post.id.replace(/\.md$/, "")}/`}>
-              {post.data.title}
-            </a>
-            {post.data.goal && <span class="goal">{post.data.goal}</span>}
-          </li>
-        ))}
-      </ul>
-    )
-  }
+<BaseLayout title="toshiki — Web エンジニア / 介護ソフト開発">
+  <section class="hero">
+    <p class="hero-eyebrow">toshiki</p>
+    <h1 class="hero-name">
+      理学療法士 → QA → 開発エンジニア。<br />
+      いま、介護ソフトを作っています。
+    </h1>
+    <p class="hero-lead">
+      医療・介護の現場で 2 年、QA エンジニアとして 2 年、
+      そして今は自社開発で<strong>介護ソフト</strong>を実装中。
+      2026 年は <strong>Rust + ハードウェア</strong> へ軸足を広げ、
+      ソフトとフィジカルの両方を扱えるエンジニアを目指しています。
+    </p>
+
+    <div class="hero-status">
+      <span class="dot" aria-hidden="true"></span>
+      <span>お仕事募集中（副業 / 受託 / 業務委託）</span>
+    </div>
+
+    <ul class="hero-links">
+      <li>
+        <a href="mailto:toshikidev821@gmail.com">toshikidev821@gmail.com</a>
+      </li>
+      <li>
+        <a
+          href="https://www.threads.net/@wizard_owl0104"
+          rel="noopener"
+          target="_blank">Threads @wizard_owl0104</a
+        >
+      </li>
+      <li>
+        <a href="/about/">詳しいプロフィール →</a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">スキル</h2>
+    <ul class="skills">
+      <li>
+        <span class="skill-cat">Frontend</span>
+        <span>React / Next.js / TypeScript</span>
+      </li>
+      <li>
+        <span class="skill-cat">Backend</span>
+        <span>PHP / Laravel</span>
+      </li>
+      <li>
+        <span class="skill-cat">Learning</span>
+        <span>Rust（組み込み方向）</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2 class="block-title">ポートフォリオ</h2>
+    <ul class="works">
+      <li>
+        <a
+          href="https://github.com/takahasitoshiki/rehab-management-system"
+          rel="noopener"
+          target="_blank"
+        >
+          <p class="work-name">rehab-management-system</p>
+          <p class="work-desc">
+            理学療法士時代の現場知見を活かしたリハビリ管理システム。
+          </p>
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/takahasitoshiki/postThreads"
+          rel="noopener"
+          target="_blank"
+        >
+          <p class="work-name">postThreads</p>
+          <p class="work-desc">Threads への投稿を効率化するツール。</p>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2 class="block-title">最新の記事</h2>
+      <p class="block-sub">毎日 IT トレンドから 1 本だけピックして咀嚼する記録</p>
+    </div>
+    {
+      recent.length === 0 ? (
+        <p style="color:var(--fg-soft)">
+          まだ記事はありません。明日の朝、最初の 1 本が公開されます。
+        </p>
+      ) : (
+        <ul class="post-list">
+          {recent.map((post) => (
+            <li>
+              <time datetime={fmt(post.data.date)}>{fmt(post.data.date)}</time>
+              <a href={`/posts/${post.id.replace(/\.md$/, "")}/`}>
+                {post.data.title}
+              </a>
+              {post.data.goal && <span class="goal">{post.data.goal}</span>}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      posts.length > recent.length && (
+        <p class="all-link">
+          <a href="/archive/">すべての記事を見る（{posts.length} 件）→</a>
+        </p>
+      )
+    }
+  </section>
 </BaseLayout>
+
+<style>
+  .hero {
+    padding: 1.5rem 0 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .hero-eyebrow {
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+  }
+  .hero-name {
+    font-size: 1.7rem;
+    line-height: 1.45;
+    margin: 0 0 1rem;
+  }
+  .hero-lead {
+    color: var(--fg-soft);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin: 0 0 1.25rem;
+  }
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+  .hero-status .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade8088;
+  }
+  .hero-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .block {
+    margin-bottom: 2.5rem;
+  }
+  .block-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .block-title {
+    font-size: 1.05rem;
+    margin: 0 0 1rem;
+    letter-spacing: 0.04em;
+  }
+  .block-head .block-title {
+    margin: 0;
+  }
+  .block-sub {
+    color: var(--fg-soft);
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  .skills {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .skills li {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.6rem 0.9rem;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+  }
+  .skill-cat {
+    color: var(--accent);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    min-width: 80px;
+  }
+
+  .works {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .works a {
+    display: block;
+    padding: 0.9rem 1rem;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    color: var(--fg);
+  }
+  .works a:hover {
+    border-color: var(--accent);
+    text-decoration: none;
+  }
+  .work-name {
+    margin: 0 0 0.25rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 0.95rem;
+  }
+  .work-desc {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: 0.85rem;
+  }
+
+  .all-link {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+  }
+</style>
