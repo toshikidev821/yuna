@@ -29,7 +29,11 @@ const fmt = (d: Date) =>
             <a href={`/posts/${post.id.replace(/\.md$/, "")}/`}>
               {post.data.title}
             </a>
-            {post.data.goal && <span class="goal">{post.data.goal}</span>}
+            {post.data.goal && (
+              <a class="goal" href={`/goals/${post.data.goal.replace(/^#/, "")}/`}>
+                {post.data.goal}
+              </a>
+            )}
           </li>
         ))}
       </ul>

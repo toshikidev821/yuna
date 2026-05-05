@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const GOAL_META: Record<string, { label: string; description: string }> = {
+  "2": { label: "#2 体を鍛える（+10kg）", description: "筋トレ・食事・体作りの記録" },
+  "3": { label: "#3 投資・資産形成", description: "投資と資産形成を学ぶ" },
+  "4": { label: "#4 英語（中級レベル）", description: "英語学習・会話練習" },
+  "5": { label: "#5 たくさん人に会う", description: "イベント参加・交流" },
+  "130": { label: "#130 エンジニアレベルアップ", description: "Rust + ハードウェア" },
+  "131": { label: "#131 引越し（猫が飼える家）", description: "物件・貯金" },
+};
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  const goals = new Set<string>();
+  posts.forEach((p) => {
+    if (p.data.goal) {
+      const key = p.data.goal.replace(/^#/, "");
+      goals.add(key);
+    }
+  });
+  return Array.from(goals).map((goal) => ({
+    params: { goal },
+    props: {
+      goal,
+      posts: posts
+        .filter((p) => p.data.goal?.replace(/^#/, "") === goal)
+        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+    },
+  }));
+}
+
+const { goal, posts } = Astro.props;
+const meta = GOAL_META[goal] ?? { label: `#${goal}`, description: "" };
+
+const fmt = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+    d.getDate(),
+  ).padStart(2, "0")}`;
+---
+
+<BaseLayout title={`${meta.label} — toshiki`} description={meta.description}>
+  <p class="crumb"><a href="/goals/">← すべての目標</a></p>
+  <h2 class="goal-title">{meta.label}</h2>
+  {meta.description && <p class="goal-desc">{meta.description}</p>}
+  <p class="count">{posts.length} 件</p>
+  <ul class="post-list">
+    {
+      posts.map((post) => (
+        <li>
+          <time datetime={fmt(post.data.date)}>{fmt(post.data.date)}</time>
+          <a href={`/posts/${post.id.replace(/\.md$/, "")}/`}>
+            {post.data.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<style>
+  .crumb {
+    font-size: 0.85rem;
+    color: var(--fg-soft);
+    margin: 0 0 1rem;
+  }
+  .goal-title {
+    font-size: 1.6rem;
+    margin: 0 0 0.25rem;
+  }
+  .goal-desc {
+    color: var(--fg-soft);
+    font-size: 0.95rem;
+    margin: 0 0 0.5rem;
+  }
+  .count {
+    color: var(--fg-soft);
+    font-size: 0.85rem;
+    margin: 0 0 1.5rem;
+  }
+</style>

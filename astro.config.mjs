@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://yuna-1v6.pages.dev",
@@ -6,6 +7,7 @@ export default defineConfig({
   build: {
     format: "directory",
   },
+  integrations: [sitemap()],
   markdown: {
     shikiConfig: {
       theme: "github-dark-dimmed",

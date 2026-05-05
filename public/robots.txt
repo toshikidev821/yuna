@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yuna-1v6.pages.dev/sitemap-index.xml
