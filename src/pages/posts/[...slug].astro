@@ -83,6 +83,11 @@ const fmt = (d: Date) =>
   </article>
 </BaseLayout>
 
+<style is:global>
+  body:has(article.post) main {
+    max-width: var(--max-width-wide);
+  }
+</style>
 <style>
   .post-head {
     margin-bottom: 2.5rem;
@@ -140,9 +145,10 @@ const fmt = (d: Date) =>
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  @media (min-width: 960px) {
+  @media (min-width: 1024px) {
     .post-layout {
-      grid-template-columns: 1fr 200px;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 3rem;
     }
   }
 
