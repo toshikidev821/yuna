@@ -1,0 +1,333 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const goals = [
+  {
+    id: "#130",
+    title: "エンジニアとしてレベルアップする",
+    sub: "Rustでハードウェアまで着手してみる",
+    progress: 10,
+    status: "進行中",
+    now: "Rustlings を毎日1問 / The Book Ch.1〜4 を読み進め中",
+    milestones: [
+      { label: "Rust基礎を完走（The Book / Rustlings）", note: "〜Week 8", state: "active" },
+      { label: "小さなCLIツールをRustで作る（TODOアプリ等）", note: "〜Week 10", state: "pending" },
+      { label: "組み込みRust入門（embedded-hal を知る）", note: "〜Week 12", state: "pending" },
+      { label: "Raspberry Pi or Arduino でLチカ（Rust）", note: "〜Week 16", state: "pending" },
+      { label: "センサー（温度・距離など）をRustで読み取る", note: "〜Week 20", state: "pending" },
+    ],
+  },
+  {
+    id: "#4",
+    title: "英語の勉強を始める",
+    sub: "中級くらいは喋れるようになりたい（CEFR B1〜B2）",
+    progress: 5,
+    status: "進行中",
+    now: "シャドーイング 5分/日（YouTube の英語エンジニア動画）",
+    milestones: [
+      { label: "英単語 2000語（日常 + 技術）", note: "〜3ヶ月", state: "active" },
+      { label: "英語で自己紹介 + 仕事の説明ができる", note: "〜5ヶ月", state: "pending" },
+      { label: "オンライン英会話で 25分話し続けられる", note: "〜8ヶ月", state: "pending" },
+      { label: "英語技術記事を辞書なしで読める", note: "〜12ヶ月", state: "pending" },
+      { label: "英語で技術的なやり取り（GitHub コメント等）ができる", note: "〜15ヶ月", state: "pending" },
+    ],
+  },
+  {
+    id: "#2",
+    title: "体を鍛える",
+    sub: "今より体重を 10kg 増やす",
+    progress: 20,
+    status: "進行中",
+    now: "毎日の筋トレ継続中（腕立て・スクワット・腹筋 各10回）/ 食事量を意識して増やし中",
+    milestones: [
+      { label: "毎日の筋トレ習慣化（0の日をなくす）", note: "〜1ヶ月", state: "done" },
+      { label: "+2kg 達成", note: "〜2ヶ月", state: "active" },
+      { label: "負荷を上げる（ダンベル or ジム検討）", note: "〜3ヶ月", state: "pending" },
+      { label: "+5kg 達成", note: "〜5ヶ月", state: "pending" },
+      { label: "+10kg 達成", note: "〜10ヶ月", state: "pending" },
+    ],
+  },
+  {
+    id: "#3",
+    title: "投資・資産形成を勉強していく",
+    sub: "資産運用の収益だけで生活できるようにしていく",
+    progress: 8,
+    status: "進行中",
+    now: "投資本を週1冊ペースで読む（「お金は寝かせて増やしなさい」から開始）",
+    milestones: [
+      { label: "投資の基礎知識を習得（本 2冊）", note: "〜1ヶ月", state: "active" },
+      { label: "証券口座を開設し、積立NISAを開始", note: "〜2ヶ月", state: "pending" },
+      { label: "毎月の収支と投資額を把握する習慣", note: "〜3ヶ月", state: "pending" },
+      { label: "個別株 or ETF を少額で試す", note: "〜6ヶ月", state: "pending" },
+      { label: "資産総額 100万円達成", note: "〜1年", state: "pending" },
+      { label: "月の収益が生活費の 10% をカバー", note: "〜3年", state: "pending" },
+    ],
+  },
+  {
+    id: "#131",
+    title: "引越し",
+    sub: "猫を飼える家に住みたい！",
+    progress: 5,
+    status: "準備中",
+    now: "希望エリア・間取りをぼんやり整理し始めた段階",
+    milestones: [
+      { label: "希望エリア・家賃上限・間取りを整理", note: "今すぐ", state: "active" },
+      { label: "引越し費用・敷金礼金を貯める", note: "〜3ヶ月", state: "pending" },
+      { label: "物件サイトで定期的にチェック開始", note: "〜Phase 3", state: "pending" },
+      { label: "内見 3件以上", note: "〜Phase 4", state: "pending" },
+      { label: "契約・引越し", note: "タイミング次第", state: "pending" },
+      { label: "猫を迎える", note: "引越し後 1〜2ヶ月", state: "pending" },
+    ],
+  },
+  {
+    id: "#5",
+    title: "たくさん人に会う",
+    sub: "月 1 イベント / 週 1 の予定",
+    progress: 15,
+    status: "継続中",
+    now: "技術系イベント（connpass）に月1参加 / 週1で予定を入れる習慣をつけ中",
+    milestones: [
+      { label: "技術系イベントに月 1 参加", note: "継続", state: "active" },
+      { label: "友人・知人と週 1 で予定を入れる", note: "継続", state: "active" },
+      { label: "オンライン英会話で外国人エンジニアとも接点", note: "Phase 3〜", state: "pending" },
+    ],
+  },
+];
+
+const stateLabel: Record<string, string> = {
+  done: "達成",
+  active: "進行中",
+  pending: "未着手",
+};
+---
+
+<BaseLayout
+  title="2026の目標 — toshiki"
+  description="2026年に掲げた6つの目標と現在の進捗。"
+>
+  <article class="goals">
+    <h1>2026 年の目標</h1>
+    <p class="lead">
+      6つのゴールを掲げて、毎日少しずつ動かしています。<br />
+      デイリータスクをこなしながら、マイルストーンを一つずつ積み上げていく記録。
+    </p>
+
+    <div class="goal-grid">
+      {
+        goals.map((g) => (
+          <section class="goal-card">
+            <div class="goal-card-header">
+              <span class="goal-id">{g.id}</span>
+              <span class={"goal-status " + g.status.replace(/\s/g, "-")}>
+                {g.status}
+              </span>
+            </div>
+            <h2>{g.title}</h2>
+            <p class="goal-sub">{g.sub}</p>
+
+            <div class="progress-wrap">
+              <div class="progress-bar">
+                <div
+                  class="progress-fill"
+                  style={`width: ${g.progress}%`}
+                />
+              </div>
+              <span class="progress-pct">{g.progress}%</span>
+            </div>
+
+            <ul class="milestones">
+              {g.milestones.map((m) => (
+                <li class={m.state}>
+                  <span class="ms-dot" />
+                  <span class="ms-label">{m.label}</span>
+                  <span class="ms-note">{m.note}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div class="now-box">
+              <span class="now-label">今やっていること</span>
+              <p>{g.now}</p>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .goals h1 {
+    font-size: 2rem;
+    margin: 0 0 0.5rem;
+  }
+  .goals .lead {
+    color: var(--fg-soft);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .goal-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .goal-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.5rem 1.75rem;
+  }
+
+  .goal-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .goal-id {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--fg-soft);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.45rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .goal-status {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .goal-card h2 {
+    font-size: 1.15rem;
+    margin: 0 0 0.3rem;
+    line-height: 1.4;
+  }
+  .goal-sub {
+    color: var(--fg-soft);
+    font-size: 0.875rem;
+    margin: 0 0 1.1rem;
+  }
+
+  /* progress bar */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  .progress-pct {
+    font-size: 0.75rem;
+    color: var(--fg-soft);
+    font-variant-numeric: tabular-nums;
+    min-width: 2.5rem;
+    text-align: right;
+  }
+
+  /* milestones */
+  .milestones {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .milestones li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+  .ms-dot {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 0.15em;
+    background: var(--border);
+    border: 2px solid var(--border);
+  }
+  .milestones li.done .ms-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .milestones li.active .ms-dot {
+    background: transparent;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .milestones li.done .ms-label {
+    color: var(--fg-soft);
+    text-decoration: line-through;
+  }
+  .milestones li.active .ms-label {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .milestones li.pending .ms-label {
+    color: var(--fg-soft);
+  }
+  .ms-note {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--fg-soft);
+    white-space: nowrap;
+    opacity: 0.7;
+  }
+
+  /* now box */
+  .now-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 0.4rem 0.4rem 0;
+    padding: 0.6rem 0.9rem;
+  }
+  .now-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .now-box p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--fg);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 680px) {
+    .goal-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    /* 最後の奇数カードを全幅 */
+    .goal-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
