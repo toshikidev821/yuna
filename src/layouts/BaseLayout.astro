@@ -55,6 +55,15 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
+    <!-- Cloudflare Web Analytics -->
+    <script
+      is:inline
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "32f58d4b21b046bfb374693fb66b7c6e"}'
+    ></script>
+    <!-- End Cloudflare Web Analytics -->
+
     <script is:inline>
       // FOUC防止: bodyレンダリング前にテーマを適用
       (function () {
