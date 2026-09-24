@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # Cloudflare
 .wrangler/
+
+# 下書き置き場（公開前の記事）
+drafts/
